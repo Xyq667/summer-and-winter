@@ -1,0 +1,97 @@
+<!-- winter.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冬天</title>
+<style>
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, "Times New Roman", "Songti SC", serif;
+    background: radial-gradient(ellipse at 50% 0%, #1b3a5c 0%, #10243d 45%, #060d18 100%);
+    color: #eaf4ff;
+  }
+
+  /* 雪花层 */
+  #snow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .flake {
+    position: absolute;
+    top: -12vh;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(200, 230, 255, .9);
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
+  @keyframes fall {
+    0%   { transform: translate3d(0, -12vh, 0) rotate(0deg); }
+    100% { transform: translate3d(0, 115vh, 0) rotate(360deg); }
+  }
+
+  .line {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    padding: 0 24px;
+    max-width: 900px;
+    text-align: center;
+    font-size: clamp(22px, 4.4vw, 46px);
+    font-style: italic;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    color: #f2f9ff;
+    text-shadow: 0 0 18px rgba(140, 200, 255, .65),
+                 0 0 60px rgba(80, 150, 220, .45);
+    animation: glow 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { opacity: .82; }
+    to   { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="snow"></div>
+  <p class="line">Can you take me to see the snow?</p>
+
+  <script>
+    (function () {
+      var layer = document.getElementById('snow');
+      var glyphs = ['❄', '❅', '❆', '·', '*'];
+      var count = window.innerWidth < 640 ? 45 : 90;
+
+      for (var i = 0; i < count; i++) {
+        var flake = document.createElement('span');
+        flake.className = 'flake';
+        flake.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+        flake.style.left = (Math.random() * 100) + 'vw';
+        flake.style.fontSize = (8 + Math.random() * 16) + 'px';
+        flake.style.opacity = (0.25 + Math.random() * 0.75).toFixed(2);
+        flake.style.animationDuration = (7 + Math.random() * 11) + 's';
+        flake.style.animationDelay = (-Math.random() * 18) + 's';
+        layer.appendChild(flake);
+      }
+    })();
+  </script>
+
+</body>
+</html>
